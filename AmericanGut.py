@@ -4,12 +4,12 @@ from pprint import pprint
 from urllib.request import urlopen
 
 #alles wat ik wil opvragen + de mogelijke antwoorden
-list_terms = ['diabetes', 'alzheimers','autoimmune','chickenpox', 'age_years', 'weight_kg', 'height_cm' ]
+list_terms = ['race','sex','age_years', 'weight_kg', 'height_cm','diabetes', 'alzheimers','autoimmune','chickenpox','kidney_disease']
 neg_answers = ['I do not have this condition', 'No']
 dnk_answers = ['Unknown', 'Unspecified']
 pos_answers = ['yes', 'Yes']
 
-url= "https://www.openhumans.orgd"
+url= "https://www.openhumans.org/api/public-data/?source=american_gut"
 site = ur.urlopen(url).read()
 data = json.loads(site.decode()) #decode de json want anaconda heeft problemen ermee om het gewoon te loaden
 
@@ -25,7 +25,7 @@ for terms in list_terms:
 outfile.write(header + "\n")
     
 #als de next niet niets is dan gaat de loop eeuwig verder zo itereer je over heel de site
-while data['next'] or data['next'] == NULL:
+while data['next'] or data['next'] == 'null':
     for i in range(0,len(data["results"]),1):
         #zoekt naar metadata.json files en gaat deze dan de gegevens ophalen
         if 'metadata.json' in data["results"][i]["basename"]:
